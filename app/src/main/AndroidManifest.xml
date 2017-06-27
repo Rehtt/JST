@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".Main2Activity"
-            android:label="即时通网页版" />
+            android:label="即时通轻聊版" />
         <activity android:name=".Main3Activity" />
         <activity android:name=".Main4Activity"></activity>
     </application>
