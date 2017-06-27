@@ -39,7 +39,13 @@ ListView listView;
 
 
 
+
+
+
     }
+
+
+
     ArrayAdapter<String> arrayAdapter_u;
     public void getUser(ArrayList<String> user,ArrayList<String> idd){
         user.remove(ws.user_r());

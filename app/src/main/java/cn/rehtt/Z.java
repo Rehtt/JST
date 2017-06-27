@@ -31,10 +31,24 @@ public  class Z implements Parcelable{
     String msg;
     String getMsg;
     static String getUserAll;
+    static int ac=0;
+    public static ArrayList<String> userTomsgg=new ArrayList<>();
+    public static ArrayList<String> siLiao=new ArrayList<>();
+
+    public void AC(int Ac){
+        ac=Ac;
+    }
+    public ArrayList<String> getSiLiao(){
+        return siLiao;
+    }
+    public ArrayList<String> getUserTomsgg(){
+        return userTomsgg;
+    }
+
 
     MainActivity call1;
     static Main3Activity call2;
-    Main4Activity call3;
+    static Main4Activity call3;
 
     protected Z(Parcel in) {
         msg = in.readString();
@@ -53,6 +67,7 @@ public  class Z implements Parcelable{
     }
     public  void setCall3(Main4Activity ac4){
         call3=ac4;
+//        getUserAll();
     }
 
     public static final Creator<Z> CREATOR = new Creator<Z>() {
@@ -141,15 +156,18 @@ public  class Z implements Parcelable{
                                 sendId(payload);
                                 break;
                             case "getUserAll":
+
                                 if (json.json(payload, "form").equals("SYS")) {
+
                                     getUserAlll(payload);
                                 } else {
-                                   getMsgAll(payload);
+                                    getMsgAll(payload);
 
                                     Log.i("v","fsdsd");
                                 }
 
                                 break;
+
 
                             default:
                                 ;
@@ -296,30 +314,53 @@ public void sendId(String msgg){
 
     }
 
-    public void sendMsg(String getMsg,String id){
-        e="sendMsg";
-        String msgl=user_r()+"&"+id+"&text"+"&"+getMsg;
+    public void sendMsg(String getMsg,String id,String user){
+//        e="sendMsg";
+        String msgl;
+        if(id.equals("ALL")) {
+            msgl = user_r() + "&" + id + "&text" + "&" + getMsg;
+        }
+        else {
+            msgl=id_r()+"&"+user+"&text&"+getMsg;
+            siLiao.add(user_r()+":"+getMsg);
+            call3.userMsg(siLiao);
+
+        }
+
         if(webSocketConnection.isConnected()){
             webSocketConnection.sendTextMessage(msgl);
             Log.i("sdsdsd",msgl);
         }
 
     }
-    Json json;
-    ArrayList<String> fUser,fType;
-    String tUser,conten;
+
+
     private void getMsgAll(String payload) {
 
-        tUser=(json.json(payload,"to"));
-        fType.add(json.json(payload,"type"));
-        switch (json.json(payload,"type")){
-            case "text":fUser.add(json.json(payload,"from")+":"+json.json(payload,"content"));
-            Log.i("AAAAAAAAAAAAAAa", String.valueOf(fUser));break;
-            default:;
-        }
-        call3.Msg(fUser,tUser,fType);
+    Json json=new Json();
+    String tUser=json.json(payload,"to");
+    String type=json.json(payload,"type");
+    String fUser=json.json(payload,"form");
+    String msgg=json.json(payload,"content");
+
+    if(!tUser.equals(user_r())) {
+        userTomsgg.add(fUser + ":" + msgg);
+        call3.Msg(userTomsgg);
+    }else {
+        siLiao.add(fUser+":"+msgg);
+        call3.userMsg(siLiao);
+
 
     }
+
+
+
+
+
+    }
+
+
+
 
 
     @Override

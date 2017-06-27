@@ -8,36 +8,24 @@ import java.util.Iterator;
  */
 
 public class Json {
-    public Json() {
-    }
-
-    public String json(String str, String content) {
-        String[] a = str.split("\\{|\\\"|\\:|\\,|\\}");
-        ArrayList<String> arrayList = new ArrayList();
-        String[] var5 = a;
-        int var6 = a.length;
-
-        String i;
-        int j;
-        for(j = 0; j < var6; ++j) {
-            i = var5[j];
+    public String json (String str, String content){
+        String[] a=str.split("\\{|\\\"|\\:|\\,|\\}");
+        ArrayList<String> arrayList=new ArrayList<>();
+        for (String i:a){
             arrayList.add(i);
         }
 
-        j = 0;
-        String re = "";
-
-        for(Iterator var11 = arrayList.iterator(); var11.hasNext(); ++j) {
-            i = (String)var11.next();
-            if(i.equals(content)) {
-                re = (String)arrayList.get(j + 3) ;
+        int j=0;
+        String re;
+        for (String i:arrayList){
+            if(i.equals(content)){
+                re= arrayList.get(j+3);return re;
             }
+            j++;
         }
 
-        if(re != "") {
-            return re;
-        } else {
-            return "NULL";
-        }
+
+
+        return "NULL";
     }
 }
