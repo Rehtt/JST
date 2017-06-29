@@ -121,7 +121,7 @@ public  class Z implements Parcelable{
 
 
 
-    private String url="ws://zlibraj.cn:8080/websockettest/websocket";
+    private String url="ws://szvone.cn:8080/vchat/websocket";
 
     private static WebSocketConnection webSocketConnection =new WebSocketConnection();
 
